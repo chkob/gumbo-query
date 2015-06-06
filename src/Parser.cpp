@@ -168,7 +168,9 @@ CSelector* CParser::parseSimpleSelectorSequence()
 		}
 		else
 		{
+			auto old_ret = ret;
 			ret = new CBinarySelector(CBinarySelector::EIntersection, ret, sel);
+			old_ret->release();
 			sel->release();
 		}
 	}
