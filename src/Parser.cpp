@@ -169,6 +169,7 @@ CSelector* CParser::parseSimpleSelectorSequence()
 		else
 		{
 			ret = new CBinarySelector(CBinarySelector::EIntersection, ret, sel);
+			sel->release();
 		}
 	}
 
