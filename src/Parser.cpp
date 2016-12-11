@@ -354,7 +354,10 @@ namespace GumboQuery
 
 	invalid:
 		{
-			throw error("unexpected character while attempting to parse expression of form an+b");
+			auto old_ret = ret;
+			ret = new CBinarySelector(CBinarySelector::EIntersection, ret, sel);
+			old_ret->release();
+			sel->release();
 		}
 
 	}
