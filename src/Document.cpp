@@ -46,8 +46,7 @@ int CDocument::errorCount() const
 
 bool CDocument::isOK() const
 {
-	// return this->mpOutput && 0 == this->mpOutput->errors.length;
-	return this->mpOutput;
+	return this->mpOutput && 0 == this->mpOutput->errors.length;
 }
 
 CSelection CDocument::find(std::string aSelector)
