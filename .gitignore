@@ -2,6 +2,9 @@
 # .gitignore file for gumbo-query #
 ###################################
 
+# Output directory specified in CMakeLists.txt 
+/lib
+
 #####
 # OS X temporary files that should never be committed
 #
