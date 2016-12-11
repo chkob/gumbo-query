@@ -18,10 +18,15 @@
 
 #include <string>
 #include <gumbo.h>
+
+#include <gumbo-query-dll.h>
+
 #include "Selector.h"
 
-class CParser
+namespace GumboQuery
 {
+	class GUMBO_QUERY_API CParser
+	{
 	private:
 
 		CParser(std::string aInput);
@@ -83,7 +88,8 @@ class CParser
 		std::string mInput;
 
 		size_t mOffset;
-};
+	};
+}
 
 #endif /* PARSER_H_ */
 

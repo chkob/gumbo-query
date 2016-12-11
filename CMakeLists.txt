@@ -17,7 +17,7 @@ file(MAKE_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
 # Add the cmake modules directory to our module path.
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake)
-find_package(Gumbo REQUIRED)
+#find_package(Gumbo REQUIRED)
 
 # Set our library source directory.
 set(gumbo_query_SOURCE_DIRECTORY ${PROJECT_SOURCE_DIR}/src)

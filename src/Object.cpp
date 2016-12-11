@@ -15,44 +15,49 @@
 
 #include "Object.h"
 
-CObject::CObject()
+namespace GumboQuery
 {
-	mReferences = 1;
-}
 
-CObject::~CObject()
-{
-	if (mReferences != 1)
+	CObject::CObject()
 	{
-		throw "something wrong, reference count not zero";
-	}
-}
-
-void CObject::retain()
-{
-	mReferences++;
-}
-
-void CObject::release()
-{
-	if (mReferences < 0)
-	{
-		throw "something wrong, reference count is negative";
+		mReferences = 1;
 	}
 
-	if (mReferences == 1)
+	CObject::~CObject()
 	{
-		delete this;
+		if (mReferences != 1)
+		{
+			throw "something wrong, reference count not zero";
+		}
 	}
-	else
-	{
-		mReferences--;
-	}
-}
 
-unsigned int CObject::references()
-{
-	return mReferences;
+	void CObject::retain()
+	{
+		mReferences++;
+	}
+
+	void CObject::release()
+	{
+		if (mReferences < 0)
+		{
+			throw "something wrong, reference count is negative";
+		}
+
+		if (mReferences == 1)
+		{
+			delete this;
+		}
+		else
+		{
+			mReferences--;
+		}
+	}
+
+	unsigned int CObject::references()
+	{
+		return mReferences;
+	}
+
 }
 
 /* vim: set ts=4 sw=4 sts=4 tw=100 noet: */
