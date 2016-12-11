@@ -17,12 +17,16 @@
 #define NODE_H_
 
 #include <gumbo.h>
+#include <gumbo-query-dll.h>
+
 #include <string>
 
-class CSelection;
-
-class CNode
+namespace GumboQuery
 {
+	class CSelection;
+
+	class GUMBO_QUERY_API CNode
+	{
 	public:
 
 		CNode(GumboNode* apNode = NULL);
@@ -41,13 +45,23 @@ class CNode
 
 		unsigned int childNum();
 
-		CNode childAt(unsigned int i);
+		CNode childAt(size_t i);
 
 		std::string attribute(std::string key);
 
 		std::string text();
 
+        std::string textWithTag();
+
 		std::string ownText();
+
+		size_t startPos();
+
+		size_t endPos();
+
+		size_t startPosOuter();
+
+		size_t endPosOuter();
 
 		std::string tag();
 
@@ -56,7 +70,8 @@ class CNode
 	private:
 
 		GumboNode* mpNode;
-};
+	};
+}
 
 #endif /* NODE_H_ */
 

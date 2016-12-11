@@ -16,8 +16,12 @@
 #ifndef OBJECT_H_
 #define OBJECT_H_
 
-class CObject
+#include <gumbo-query-dll.h>
+
+namespace GumboQuery
 {
+	class GUMBO_QUERY_API CObject
+	{
 	public:
 
 		CObject();
@@ -34,8 +38,9 @@ class CObject
 
 	private:
 
-		unsigned int mReferences;
-};
+		int mReferences;
+	};
+}
 
 #endif /* OBJECT_H_ */
 

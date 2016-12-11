@@ -17,29 +17,38 @@
 #define QUERYUTIL_H_
 
 #include <gumbo.h>
+
+#include <gumbo-query-dll.h>
+
 #include <string>
 #include <vector>
 
-class CQueryUtil
+namespace GumboQuery
 {
+	class GUMBO_QUERY_API CQueryUtil
+	{
 	public:
 
 		static std::string tolower(std::string s);
 
 		static std::vector<GumboNode*> unionNodes(std::vector<GumboNode*> aNodes1,
-				std::vector<GumboNode*> aNode2);
+			std::vector<GumboNode*> aNode2);
 
 		static bool nodeExists(std::vector<GumboNode*> aNodes, GumboNode* apNode);
 
 		static std::string nodeText(GumboNode* apNode);
+		static std::string nodeTextWithTag(GumboNode* apNode);
 
 		static std::string nodeOwnText(GumboNode* apNode);
 
 	private:
 
 		static void writeNodeText(GumboNode* apNode, std::string& aText);
+		static void writeNodeTextWithTag(GumboNode* apNode, std::string& aText);
 
-};
+
+	};
+}
 
 #endif /* QUERYUTIL_H_ */
 

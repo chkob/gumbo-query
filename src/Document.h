@@ -17,11 +17,15 @@
 #define DOCUMENT_H_
 
 #include <gumbo.h>
+#include <gumbo-query-dll.h>
+
 #include <string>
 #include "Selection.h"
 
-class CDocument: public CObject
+namespace GumboQuery
 {
+	class GUMBO_QUERY_API CDocument : public CObject
+	{
 	public:
 
 		CDocument();
@@ -39,7 +43,8 @@ class CDocument: public CObject
 	private:
 
 		GumboOutput* mpOutput;
-};
+	};
+}
 
 #endif /* DOCUMENT_H_ */
 
