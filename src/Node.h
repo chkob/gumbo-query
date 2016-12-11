@@ -17,12 +17,16 @@
 #define NODE_H_
 
 #include <gumbo.h>
+#include <gumbo-query-dll.h>
+
 #include <string>
 
-class CSelection;
-
-class CNode
+namespace GumboQuery
 {
+	class CSelection;
+
+	class GUMBO_QUERY_API CNode
+	{
 	public:
 
 		CNode(GumboNode* apNode = NULL);
@@ -47,6 +51,8 @@ class CNode
 
 		std::string text();
 
+        std::string textWithTag();
+
 		std::string ownText();
 
 		size_t startPos();
@@ -64,7 +70,8 @@ class CNode
 	private:
 
 		GumboNode* mpNode;
-};
+	};
+}
 
 #endif /* NODE_H_ */
 

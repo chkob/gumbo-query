@@ -15,83 +15,93 @@
 
 #include "QueryUtil.h"
 
-std::string CQueryUtil::tolower(std::string s)
+namespace GumboQuery
 {
-	for (unsigned int i = 0; i < s.size(); i++)
+
+	std::string CQueryUtil::tolower(std::string s)
 	{
-		char c = s[i];
-		if (c >= 'A' && c <= 'Z')
+		for (unsigned int i = 0; i < s.size(); i++)
 		{
-			c = 'a' + c - 'A';
-			s[i] = c;
+			char c = s[i];
+			if (c >= 'A' && c <= 'Z')
+			{
+				c = 'a' + c - 'A';
+				s[i] = c;
+			}
 		}
+
+		return s;
 	}
 
-	return s;
-}
-
-std::vector<GumboNode*> CQueryUtil::unionNodes(std::vector<GumboNode*> aNodes1,
+	std::vector<GumboNode*> CQueryUtil::unionNodes(std::vector<GumboNode*> aNodes1,
 		std::vector<GumboNode*> aNodes2)
-{
-	for (std::vector<GumboNode*>::iterator it = aNodes2.begin(); it != aNodes2.end(); it++)
 	{
-		GumboNode* pNode = *it;
-		if (nodeExists(aNodes1, pNode))
+		for (std::vector<GumboNode*>::iterator it = aNodes2.begin(); it != aNodes2.end(); it++)
 		{
-			continue;
+			GumboNode* pNode = *it;
+			if (nodeExists(aNodes1, pNode))
+			{
+				continue;
+			}
+
+			aNodes1.push_back(pNode);
 		}
 
-		aNodes1.push_back(pNode);
+		return aNodes1;
 	}
 
-	return aNodes1;
-}
-
-bool CQueryUtil::nodeExists(std::vector<GumboNode*> aNodes, GumboNode* apNode)
-{
-	for (std::vector<GumboNode*>::iterator it = aNodes.begin(); it != aNodes.end(); it++)
+	bool CQueryUtil::nodeExists(std::vector<GumboNode*> aNodes, GumboNode* apNode)
 	{
-		GumboNode* pNode = *it;
-		if (pNode == apNode)
+		for (std::vector<GumboNode*>::iterator it = aNodes.begin(); it != aNodes.end(); it++)
 		{
-			return true;
+			GumboNode* pNode = *it;
+			if (pNode == apNode)
+			{
+				return true;
+			}
 		}
+		return false;
 	}
-	return false;
-}
 
-std::string CQueryUtil::nodeText(GumboNode* apNode)
-{
-	std::string text;
-	writeNodeText(apNode, text);
-	return text;
-}
-
-std::string CQueryUtil::nodeOwnText(GumboNode* apNode)
-{
-	std::string text;
-	if (apNode->type != GUMBO_NODE_ELEMENT)
+	std::string CQueryUtil::nodeText(GumboNode* apNode)
 	{
+		std::string text;
+		writeNodeText(apNode, text);
 		return text;
 	}
 
-	GumboVector children = apNode->v.element.children;
-	for (unsigned int i = 0; i < children.length; i++)
+   std::string CQueryUtil::nodeTextWithTag(GumboNode* apNode)
+   {
+      std::string text;
+      writeNodeTextWithTag(apNode, text);
+      return text;
+   }
+
+	std::string CQueryUtil::nodeOwnText(GumboNode* apNode)
 	{
-		GumboNode* child = (GumboNode*) children.data[i];
-		if (child->type == GUMBO_NODE_TEXT)
+		std::string text;
+		if (apNode->type != GUMBO_NODE_ELEMENT)
 		{
-			text.append(child->v.text.text);
+			return text;
 		}
+
+		GumboVector children = apNode->v.element.children;
+		for (unsigned int i = 0; i < children.length; i++)
+		{
+			GumboNode* child = (GumboNode*)children.data[i];
+			if (child->type == GUMBO_NODE_TEXT)
+			{
+				text.append(child->v.text.text);
+			}
+		}
+
+		return text;
 	}
 
-	return text;
-}
-
-void CQueryUtil::writeNodeText(GumboNode* apNode, std::string& aText)
-{
-	switch (apNode->type)
+	void CQueryUtil::writeNodeText(GumboNode* apNode, std::string& aText)
 	{
+		switch (apNode->type)
+		{
 		case GUMBO_NODE_TEXT:
 			aText.append(apNode->v.text.text);
 			break;
@@ -100,14 +110,47 @@ void CQueryUtil::writeNodeText(GumboNode* apNode, std::string& aText)
 			GumboVector children = apNode->v.element.children;
 			for (unsigned int i = 0; i < children.length; i++)
 			{
-				GumboNode* child = (GumboNode*) children.data[i];
+				GumboNode* child = (GumboNode*)children.data[i];
 				writeNodeText(child, aText);
 			}
 			break;
 		}
 		default:
 			break;
+		}
 	}
+
+   void CQueryUtil::writeNodeTextWithTag(GumboNode* apNode, std::string& aText)
+   {
+      switch (apNode->type)
+      {
+      case GUMBO_NODE_TEXT:
+      {
+         std::string txt = apNode->v.text.text;
+         if (*const_cast<std::string::value_type*>(txt.c_str()) == '\n')
+         {
+            txt = const_cast<std::string::value_type*>(txt.c_str()) + 1;
+            aText.resize(aText.size() - 1);
+         }
+
+         aText.append(txt.c_str());
+         aText += '|';
+      }
+         break;
+      case GUMBO_NODE_ELEMENT:
+      {
+         GumboVector children = apNode->v.element.children;
+         for (unsigned int i = 0; i < children.length; i++)
+         {
+            GumboNode* child = (GumboNode*) children.data[i];
+            writeNodeTextWithTag(child, aText);
+         }
+         break;
+      }
+      default:
+         break;
+      }
+   }
 }
 
 /* vim: set ts=4 sw=4 sts=4 tw=100 noet: */

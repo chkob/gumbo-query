@@ -17,14 +17,19 @@
 #define SELECTION_H_
 
 #include "Object.h"
+
+#include <gumbo-query-dll.h>
+
 #include <vector>
 #include <string>
 #include <gumbo.h>
 
-class CNode;
-
-class CSelection: public CObject
+namespace GumboQuery
 {
+	class CNode;
+
+	class GUMBO_QUERY_API CSelection : public CObject
+	{
 
 	public:
 
@@ -45,7 +50,8 @@ class CSelection: public CObject
 	private:
 
 		std::vector<GumboNode*> mNodes;
-};
+	};
+}
 
 #endif /* SELECTION_H_ */
 

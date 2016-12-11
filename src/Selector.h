@@ -19,10 +19,15 @@
 #include <gumbo.h>
 #include <string>
 #include <vector>
+
+#include <gumbo-query-dll.h>
+
 #include "Object.h"
 
-class CSelector: public CObject
+namespace GumboQuery
 {
+	class GUMBO_QUERY_API CSelector : public CObject
+	{
 
 	public:
 		typedef enum
@@ -108,10 +113,10 @@ class CSelector: public CObject
 		bool mLast;
 
 		GumboTag mTag;
-};
+	};
 
-class CUnarySelector: public CSelector
-{
+	class GUMBO_QUERY_API CUnarySelector : public CSelector
+	{
 	public:
 		typedef enum
 		{
@@ -144,10 +149,10 @@ class CUnarySelector: public CSelector
 		CSelector* mpS;
 
 		TOperator mOp;
-};
+	};
 
-class CBinarySelector: public CSelector
-{
+   class GUMBO_QUERY_API CBinarySelector : public CSelector
+	{
 	public:
 		typedef enum
 		{
@@ -184,10 +189,10 @@ class CBinarySelector: public CSelector
 		TOperator mOp;
 
 		bool mAdjacent;
-};
+	};
 
-class CAttributeSelector: public CSelector
-{
+   class GUMBO_QUERY_API CAttributeSelector : public CSelector
+	{
 	public:
 		typedef enum
 		{
@@ -236,10 +241,10 @@ class CAttributeSelector: public CSelector
 		std::string mValue;
 
 		TOperator mOp;
-};
+	};
 
-class CTextSelector: public CSelector
-{
+   class GUMBO_QUERY_API CTextSelector : public CSelector
+	{
 	public:
 		typedef enum
 		{
@@ -271,7 +276,8 @@ class CTextSelector: public CSelector
 		std::string mValue;
 
 		TOperator mOp;
-};
+	};
+}
 
 #endif /* SELECTOR_H_ */
 

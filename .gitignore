@@ -173,3 +173,7 @@ xcuserdata/**/*
 # pull your cahnges to other's repo"
 #
 #*.xccheckout
+/build_x32
+/build_x64
+/lib
+/3rdparty
